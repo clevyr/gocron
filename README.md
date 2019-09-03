@@ -2,7 +2,7 @@ This package is currently looking for new maintainers (cause @jasonlvhit is in [
 
 ## goCron: A Golang Job Scheduling Package.
 
-[![GgoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](http://godoc.org/github.com/jasonlvhit/gocron)
+[![GgoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](http://godoc.org/github.com/clevyr/gocron)
 
 goCron is a Golang job scheduling package which lets you run Go functions periodically at pre-determined interval using a simple, human-friendly syntax.
 
@@ -20,7 +20,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/jasonlvhit/gocron"
+	"github.com/clevyr/gocron"
 )
 
 func task() {
@@ -56,6 +56,10 @@ func main() {
 	gocron.Every(1).Day().At("10:30").Do(task)
 	gocron.Every(1).Monday().At("18:30").Do(task)
 
+	// function At() runs a job only once
+	gocron.At(time.Now().Add(30*time.Hour)).Do(task)
+	gocron.At(time.Now().Add(5*time.Minutes)).Do(task)
+
 	// remove, clear and next_run
 	_, time := gocron.NextRun()
 	fmt.Println(time)
@@ -74,7 +78,7 @@ func main() {
 }
 ```
 
-and full test cases and [document](http://godoc.org/github.com/jasonlvhit/gocron) will be coming soon (help is wanted! If you want to contribute, pull requests are welcome).
+and full test cases and [document](http://godoc.org/github.com/clevyr/gocron) will be coming soon (help is wanted! If you want to contribute, pull requests are welcome).
 
 If you need to prevent a job from running at the same time from multiple cron instances (like running a cron app from multiple servers),
 you can provide a [Locker implementation](example/lock.go) and lock the required jobs.
